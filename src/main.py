@@ -6,15 +6,16 @@
 from flask import Flask, render_template, request, redirect, session
 from user import User
 
-# Temporary (RAM lagring)
-users = {} # Type {[str, User]}
-
 app = Flask(__name__)
 app.secret_key = "3hfdsajfhskruk"
 
 @app.route("/")
-def index():
+def index() -> str:
     return render_template("index.html")
+
+def session_login(user: User) -> None:
+    session["user"] = user
+    session["logged_in"] = True
 
 @app.route("/log-out")
 def log_out():
@@ -22,7 +23,7 @@ def log_out():
     return redirect("/")
 
 @app.route("/register")
-def get_register():
+def get_register() -> str:
     return render_template("register.html")
 
 
@@ -33,14 +34,11 @@ def post_register():
     # TODO: Hvis bruker allerede eksisterer...?
     # TODO: Hvis brukernavn / passord er tomt??
 
-    users[user.username.lower()] = user
-    session["user"] = user
-    session["logged_in"] = True
-    pprint(users)
+    session_login(user)
     return redirect("/")
 
 @app.route("/log-in")
-def get_login():
+def get_login() -> str:
     return render_template("login.html")
 
 @app.route("/log-in", methods=["POST"])
@@ -50,11 +48,10 @@ def post_login():
         return render_template("login.html",
                                error_msg="Feil brukernavn eller passord.",
                                form=request.form)
-    session["user"] = user
-    session["logged_in"] = True
+    session_login(user)
     return redirect("/")
 
-def run(debug: bool):
+def run(debug: bool = False) -> None:
     app.run(debug=debug)
 
 # Dev mode:

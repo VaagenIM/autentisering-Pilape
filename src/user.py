@@ -1,6 +1,10 @@
 from dataclasses import dataclass
 from auth import hash_password, is_correct_password
 
+# Ram saving for debug
+test_users = {}
+DATABASE = "users.db"
+
 @dataclass
 class User:
     username: str
@@ -16,5 +20,14 @@ class User:
         return is_correct_password(password, self.username, self.password)
 
     @property
-    def fullt_navn(self):
+    def fullt_navn(self) -> str:
         return f"{self.fornavn} {self.etternavn}"
+    
+
+def register_user(user: User, debug: bool = False) -> None:
+    if debug:
+        test_users[test_users.username.lower()] = user
+
+def login():
+    pass
+
