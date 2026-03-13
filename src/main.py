@@ -31,7 +31,8 @@ def get_register() -> str:
 def post_register():
 
     # If username or password is empty
-    #print(request.form["username"])
+    if request.form["username"] == "" or request.form["password"] == "":
+        return render_template("register.html", error_msg="Du må oppgi brukernavn og passord")
     
     # If username exists
     if get_user(request.form["username"]) != None:
