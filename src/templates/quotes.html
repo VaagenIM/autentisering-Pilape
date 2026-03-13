@@ -1,0 +1,11 @@
+{% set title="Quotes" %}
+
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Sitat</h2>
+    {% for quote in quotes %}
+    <p>{{quote.content}}</p><br>
+    <p> - {{quote.user}}</p>
+    {% endfor %}
+{% endblock %}

@@ -5,6 +5,7 @@
 
 from flask import Flask, render_template, request, redirect, session
 from user import User, get_user
+from decorators import login_required
 
 app = Flask(__name__)
 app.secret_key = "3hfdsajfhskruk"
@@ -56,6 +57,11 @@ def post_login():
 
     session_login(user)
     return redirect("/")
+
+@app.route("/quotes")
+@login_required
+def get_quotes() -> str:
+    return render_template("quotes.html")
 
 def run(debug: bool = False) -> None:
     app.run(debug=debug)
