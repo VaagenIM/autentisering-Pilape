@@ -45,9 +45,8 @@ def get_login() -> str:
 def post_login():
     user = get_user(request.form.get("username").lower())
     if not user or not user.check_password(request.form.get("password")):
-        return render_template("login.html",
-                               error_msg="Feil brukernavn eller passord.",
-                               form=request.form)
+        return render_template("login.html", error_msg="Feil brukernavn eller passord.", form=request.form)
+
     session_login(user)
     return redirect("/")
 

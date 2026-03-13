@@ -1,8 +1,7 @@
 from dataclasses import dataclass
 from auth import hash_password, is_correct_password
 
-# Ram saving for debug
-test_users = {}
+import sqlite3
 DATABASE = "users.db"
 
 @dataclass
@@ -10,27 +9,57 @@ class User:
     username: str
     password: str
 
-    fornavn: str
-    etternavn: str
+    _loaded_from_db: bool = False
 
     def __post_init__(self):
+        if self._loaded_from_db:
+            return
+        self.username = self.username.lower()
         self.password = hash_password(self.password, self.username)
+        self._loaded_from_db = True
+        self.register_to_db()
 
     def check_password(self, password: str) -> bool:
         return is_correct_password(password, self.username, self.password)
-
-    @property
-    def full_name(self) -> str:
-        return f"{self.fornavn} {self.etternavn}"
     
 
-def register_user(user: User, debug: bool = False) -> None:
-    if debug:
-        test_users[test_users.username.lower()] = user
+    def register_to_db(self) -> None:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
 
-def login():
-    pass
+        cursor.execute("""INSERT INTO users (username, password)
+        VALUES (:username, :password)""", self.__dict__)
 
-def get_user(username: str, debug: bool = False) -> User | bool:
-    if debug:
-        return test_users.get(username, None)
+        conn.commit()
+        conn.close()
+
+def get_user(username: str) -> User | bool:
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+
+    result = cursor.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
+    print(result)
+
+    conn.commit()
+    conn.close()
+
+    if result == None:
+        return False
+
+    return User(*result, _loaded_from_db=True)
+
+def db_init() -> None:
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+        username TEXT PRIMARY KEY,
+        password TEXT,
+        UNIQUE(username)
+    )""")
+
+    conn.commit()
+    conn.close()
+
+db_init()
