@@ -1,0 +1,62 @@
+# Algoritme som bruker salt & pepper X
+# Krypteringsfunksjon X
+
+# TODO: Lagring av brukerdata - Ser på det imorgen
+
+from flask import Flask, render_template, request, redirect, session
+from user import User
+
+# Temporary (RAM lagring)
+users = {} # Type {[str, User]}
+
+app = Flask(__name__)
+app.secret_key = "3hfdsajfhskruk"
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/log-out")
+def log_out():
+    session.clear()
+    return redirect("/")
+
+@app.route("/register")
+def get_register():
+    return render_template("register.html")
+
+
+@app.route("/register", methods=["POST"])
+def post_register():
+    user = User(**request.form)
+
+    # TODO: Hvis bruker allerede eksisterer...?
+    # TODO: Hvis brukernavn / passord er tomt??
+
+    users[user.username.lower()] = user
+    session["user"] = user
+    session["logged_in"] = True
+    pprint(users)
+    return redirect("/")
+
+@app.route("/log-in")
+def get_login():
+    return render_template("login.html")
+
+@app.route("/log-in", methods=["POST"])
+def post_login():
+    user = users.get(request.form.get("username").lower(), False)
+    if not user or not user.check_password(request.form.get("password")):
+        return render_template("login.html",
+                               error_msg="Feil brukernavn eller passord.",
+                               form=request.form)
+    session["user"] = user
+    session["logged_in"] = True
+    return redirect("/")
+
+def run(debug: bool):
+    app.run(debug=debug)
+
+# Dev mode:
+if __name__ == "__main__":
+    run(debug=True)
