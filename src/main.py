@@ -4,7 +4,7 @@
 # TODO: Lagring av brukerdata - Ser på det imorgen
 
 from flask import Flask, render_template, request, redirect, session
-from user import User
+from user import User, get_user
 
 app = Flask(__name__)
 app.secret_key = "3hfdsajfhskruk"
@@ -43,7 +43,7 @@ def get_login() -> str:
 
 @app.route("/log-in", methods=["POST"])
 def post_login():
-    user = users.get(request.form.get("username").lower(), False)
+    user = get_user(request.form.get("username").lower())
     if not user or not user.check_password(request.form.get("password")):
         return render_template("login.html",
                                error_msg="Feil brukernavn eller passord.",

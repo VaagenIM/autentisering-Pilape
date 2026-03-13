@@ -20,7 +20,7 @@ class User:
         return is_correct_password(password, self.username, self.password)
 
     @property
-    def fullt_navn(self) -> str:
+    def full_name(self) -> str:
         return f"{self.fornavn} {self.etternavn}"
     
 
@@ -31,3 +31,6 @@ def register_user(user: User, debug: bool = False) -> None:
 def login():
     pass
 
+def get_user(username: str, debug: bool = False) -> User | bool:
+    if debug:
+        return test_users.get(username, None)
