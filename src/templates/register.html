@@ -12,4 +12,8 @@
         <br>
         <input type="submit">
     </form>
+
+    {% if error_msg %}
+    <p style="color:red;">{{ error_msg }}</p>
+    {% endif %}
 {% endblock %}

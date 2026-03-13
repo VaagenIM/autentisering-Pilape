@@ -33,18 +33,17 @@ class User:
         conn.commit()
         conn.close()
 
-def get_user(username: str) -> User | bool:
+def get_user(username: str) -> User | None:
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
 
     result = cursor.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
-    print(result)
 
     conn.commit()
     conn.close()
 
     if result == None:
-        return False
+        return result
 
     return User(*result, _loaded_from_db=True)
 

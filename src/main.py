@@ -29,10 +29,16 @@ def get_register() -> str:
 
 @app.route("/register", methods=["POST"])
 def post_register():
+
+    # If username or password is empty
+    #print(request.form["username"])
+    
+    # If username exists
+    if get_user(request.form["username"]) != None:
+        return render_template("register.html", error_msg="Brukernavn er tatt")
+
     user = User(**request.form)
 
-    # TODO: Hvis bruker allerede eksisterer...?
-    # TODO: Hvis brukernavn / passord er tomt??
 
     session_login(user)
     return redirect("/")
