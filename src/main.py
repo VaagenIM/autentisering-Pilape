@@ -5,6 +5,7 @@
 
 from flask import Flask, render_template, request, redirect, session
 from user import User, get_user
+from quote import quote, get_quote_list, delete_quote
 from decorators import login_required
 
 app = Flask(__name__)
@@ -61,7 +62,21 @@ def post_login():
 @app.route("/quotes")
 @login_required
 def get_quotes() -> str:
-    return render_template("quotes.html")
+    return render_template("quotes.html", quotes=get_quote_list())
+
+@app.route("/quotes", methods=["POST"])
+@login_required
+def post_quotes():
+    content: str = request.form["content"]
+    quote(content, session["user"].get("username"))
+
+    return render_template("quotes.html", quotes=get_quote_list())
+
+@app.route("/quotes/delete/<int:id>", methods=["POST"])
+@login_required
+def delete_quotes(id: int):
+    delete_quote(id)
+    return render_template("quotes.html", quotes=get_quote_list())
 
 def run(debug: bool = False) -> None:
     app.run(debug=debug)

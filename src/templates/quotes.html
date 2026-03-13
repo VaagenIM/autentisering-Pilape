@@ -4,8 +4,24 @@
 
 {% block content %}
     <h2>Sitat</h2>
+    <p>Skriv inn sitat her</p>
+    <p>Du kan også slette hvem som helst sine sitat >:)</p>
+
+    <form action="{{ url_for('post_quotes') }}" method="post">
+        <br>
+        <label for="content">Sitat</label>
+        <input id="content" name="content" required value="{{ form.content if form }}">
+        <br>
+        <input type="submit">
+    </form>
+
     {% for quote in quotes %}
-    <p>{{quote.content}}</p><br>
-    <p> - {{quote.user}}</p>
+        <p>{{quote[1]}}</p>
+        <p> - {{quote[2]}}</p>
+        <form action="{{ url_for('delete_quotes', id=quote[0]) }}" method="post">
+            <!--<input type="hidden" value="{{quote[0]}}" name="id">-->
+            <input type="submit" value="Slett">
+        </form>
+        <br>
     {% endfor %}
 {% endblock %}
