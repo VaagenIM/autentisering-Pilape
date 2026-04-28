@@ -39,7 +39,6 @@ def get_user(username: str) -> User | None:
 
     result = cursor.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
 
-    conn.commit()
     conn.close()
 
     if result == None:

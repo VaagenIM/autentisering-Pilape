@@ -3,7 +3,7 @@
 
 # TODO: Lagring av brukerdata - Ser på det imorgen
 
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, url_for
 from user import User, get_user
 from quote import quote, get_quote_list, delete_quote
 from decorators import login_required
@@ -70,13 +70,13 @@ def post_quotes():
     content: str = request.form["content"]
     quote(content, session["user"].get("username"))
 
-    return render_template("quotes.html", quotes=get_quote_list())
+    return redirect(url_for("get_quotes"))
 
 @app.route("/quotes/delete/<int:id>", methods=["POST"])
 @login_required
 def delete_quotes(id: int):
     delete_quote(id)
-    return render_template("quotes.html", quotes=get_quote_list())
+    return redirect(url_for("get_quotes"))
 
 def run(debug: bool = False) -> None:
     app.run(debug=debug)
