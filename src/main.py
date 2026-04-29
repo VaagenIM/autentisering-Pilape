@@ -1,8 +1,3 @@
-# Algoritme som bruker salt & pepper X
-# Krypteringsfunksjon X
-
-# TODO: Lagring av brukerdata - Ser på det imorgen
-
 from flask import Flask, render_template, request, redirect, session, url_for
 from user import User, get_user
 from quote import quote, get_quote_list, delete_quote
