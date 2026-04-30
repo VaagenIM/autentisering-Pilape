@@ -37,6 +37,17 @@ def delete_quote(id: int) -> None:
     conn.commit()
     conn.close()
 
+def get_quote_username(id: int) -> str:
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+
+    result = cursor.execute("SELECT user FROM quotes WHERE id = ?", (id, )).fetchone()
+
+    conn.commit()
+    conn.close()
+
+    return result[0] # Fetchone returns tuple
+
 def db_init() -> None:
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()

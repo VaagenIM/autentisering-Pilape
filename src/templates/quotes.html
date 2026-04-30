@@ -6,6 +6,7 @@
     <h2>Sitat</h2>
     <p>Skriv inn sitat her</p>
     <p>Du kan også slette hvem som helst sine sitat >:)</p>
+    <p>Nvm jeg fikset det :))</p>
 
     <form action="{{ url_for('post_quotes') }}" method="post">
         <br>
@@ -20,7 +21,9 @@
         <p> - {{quote[2]}}</p>
         <form action="{{ url_for('delete_quotes', id=quote[0]) }}" method="post">
             <!--<input type="hidden" value="{{quote[0]}}" name="id">-->
-            <input type="submit" value="Slett">
+            {% if quote[2] == username %}
+                <input type="submit" value="Slett">
+            {% endif %}
         </form>
         <br>
     {% endfor %}

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, url_for
 from user import User, get_user
-from quote import quote, get_quote_list, delete_quote
+from quote import quote, get_quote_list, delete_quote, get_quote_username
 from decorators import login_required
 
 app = Flask(__name__)
@@ -57,7 +57,7 @@ def post_login():
 @app.route("/quotes")
 @login_required
 def get_quotes() -> str:
-    return render_template("quotes.html", quotes=get_quote_list())
+    return render_template("quotes.html", quotes=get_quote_list(), username=session["user"]["username"])
 
 @app.route("/quotes", methods=["POST"])
 @login_required
@@ -70,6 +70,9 @@ def post_quotes():
 @app.route("/quotes/delete/<int:id>", methods=["POST"])
 @login_required
 def delete_quotes(id: int):
+    if get_quote_username(id) != session["user"]["username"]:
+        return "403 Forbidden", 403
+
     delete_quote(id)
     return redirect(url_for("get_quotes"))
 
