@@ -1,6 +1,7 @@
 import hashlib
+import os
 
-pepper = "123"  # TODO: Bruk .env
+pepper = os.environ["PEPPER"] if "PEPPER" in os.environ else 123
 
 def hash_password(key: str, salt: str) -> str:
     passphrase = f"{salt}{key}{pepper}"

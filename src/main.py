@@ -2,9 +2,10 @@ from flask import Flask, render_template, request, redirect, session, url_for
 from user import User, get_user
 from quote import quote, get_quote_list, delete_quote, get_quote_username
 from decorators import login_required
+import os
 
 app = Flask(__name__)
-app.secret_key = "3hfdsajfhskruk"
+app.secret_key = os.environ["FLASK_SECRET_KEY"] if "FLASK_SECRET_KEY" in os.environ else "3hfdsajfhskruk"
 
 @app.route("/")
 def index() -> str:
