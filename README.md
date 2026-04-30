@@ -19,12 +19,14 @@ PEPPER="SKRIV NOE HER"
 > [!WARNING]
 > Hvis du ikke lager env filen bruker appen backup verdiene lagret direkte i koden.
 
-Filstrukturen skal inneholde dette:
+Filstrukturen skal inneholde disse filene:
+```
 src/
 .env
 compose.yml
 Dockerfile
 requirements.txt
+```
 
 Deretter kjører du:
 ```bash
