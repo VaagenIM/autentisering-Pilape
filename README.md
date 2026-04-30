@@ -7,12 +7,4 @@ pip install -r requirements.txt
 python src/run.py
 ```
 
-## Hosting
-
-Du kan hoste nettsiden med docker:
-
-```bash
-docker compose up -d
-```
-
 Besøk http://localhost:5000
