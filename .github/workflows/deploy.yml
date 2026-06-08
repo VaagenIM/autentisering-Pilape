@@ -13,7 +13,7 @@ jobs:
       - name: Create env file
         run: |
           touch .env
-          echo "${{ secret.ENV_FILE }}" > .env
+          echo "${{ secrets.ENV_FILE }}" > .env
 
       - name: Build and run
         run: docker-compose up --build
