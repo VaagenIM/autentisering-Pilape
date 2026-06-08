@@ -6,13 +6,14 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-      - shell: bash
-      env:
-         FLASK_SECRET_KEY: ${{ secrets.FLASK_SECRET_KEY }}
-         PEPPER: ${{ secrets.PEPPER }}
 
       - name: Checkout code
         uses: actions/checkout@v6
+
+      - name: Create env file
+        run: |
+          touch .env
+          echo "${{ secret.ENV_FILE }}" > .env
 
       - name: Build and run
         run: docker-compose up --build
