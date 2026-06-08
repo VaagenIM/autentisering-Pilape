@@ -1,0 +1,52 @@
+:root {
+    background-color: darkslategray;
+    padding: 1%;
+}
+
+.foreground {
+    background-color: seagreen;
+    color: antiquewhite;
+    padding: 1%;
+
+    margin-bottom: 1%;
+}
+
+.button {
+    background-color: lightgreen;
+    color: darkslategray;
+
+    border: 0px;
+    padding: 0.5%;
+    margin-top: 1%;
+    width: 5%;
+
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: lightskyblue;
+    color: darkslateblue;
+}
+
+.text-input {
+    background-color: antiquewhite;
+    color: darkslategray;
+
+    padding: 0.25%;
+    margin-top: 1%;
+    border: 0px;
+}
+
+.error-msg {
+    color: rgb(255, 155, 192);
+}
+
+.quote {
+    background-color: darkslategray;
+    display: block;
+
+    margin-top: 2%;
+    margin-bottom: 2%;
+
+    padding: 1%;
+}

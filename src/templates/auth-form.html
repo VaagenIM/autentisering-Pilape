@@ -1,0 +1,11 @@
+{% macro form(url) %}
+    <form action="{{ url }}" method="post">
+        <label for="username">Brukernavn</label>
+        <input id="username" name="username" class="text-input" required value="{{ form.username if form }}">
+        <br>
+        <label for="password">Passord</label>
+        <input id="password" type="password" name="password" class="text-input" required value="{{ form.password if form }}">
+        <br>
+        <input type="submit" class="button"> 
+    </form>
+{% endmacro %}

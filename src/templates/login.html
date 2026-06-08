@@ -1,20 +1,13 @@
 {% extends "base.html" %}
+{% import "auth-form.html" as auth %}
 
 {% block content %}
 
-    <form action="{{ url_for('post_login') }}" method="post">
-        <br>
-        <label for="username">Brukernavn</label>
-        <input id="username" name="username" required value="{{ form.username if form }}">
-        <br>
-        <label for="password">Passord</label>
-        <input id="password" type="password" name="password" required value="{{ form.password if form }}">
-        <br>
-        <input type="submit">
-    </form>
+    <h2>Logg inn</h2>
+    {{ auth.form(url_for('post_login')) }}
 
     {% if error_msg %}
-    <p style="color:red;">{{ error_msg }}</p>
+        <b class="error-msg">{{ error_msg }}</b>
     {% endif %}
 
 {% endblock %}
