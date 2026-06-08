@@ -1,0 +1,11 @@
+name: Deploy
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: self-hosted
+    - name: Checkout code
+      uses: actions/checkout@v6
+    - name: Build and run
+      run: docker-compose up --build
