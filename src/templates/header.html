@@ -1,0 +1,19 @@
+<nav>
+    {% block nav %}
+
+        <a href="/" class="button">Hjem</a>
+
+        {% if not session.logged_in %}
+        <a href="/register" class="button">Registrer</a>
+        <a href="/log-in" class="button">Logg inn</a>
+        {% else %}
+        <a href="/log-out" class="button">Logg ut</a>
+        <a href="/quotes" class="button">Sitat</a>
+
+        {% if session.user %}
+            {{ session.user.username }}
+        {% endif %}
+
+        {% endif %}
+    {% endblock %}
+</nav>
