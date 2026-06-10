@@ -4,7 +4,7 @@
 {% block content %}
 
     <h2>Logg inn</h2>
-    {{ auth.form(url_for('post_login')) }}
+    {{ auth.form(url_for('post_login'), "Logg inn") }}
 
     {% if error_msg %}
         <b class="error-msg">{{ error_msg }}</b>

@@ -1,4 +1,4 @@
-{% macro form(url) %}
+{% macro form(url, submit_name) %}
     <form action="{{ url }}" method="post">
         <label for="username">Brukernavn</label>
         <input id="username" name="username" class="text-input" required value="{{ form.username if form }}">
@@ -6,6 +6,6 @@
         <label for="password">Passord</label>
         <input id="password" type="password" name="password" class="text-input" required value="{{ form.password if form }}">
         <br>
-        <input type="submit" class="button"> 
+        <input type="submit" class="button" value="{{ submit_name }}"> 
     </form>
 {% endmacro %}

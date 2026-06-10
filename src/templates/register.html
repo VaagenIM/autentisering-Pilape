@@ -4,7 +4,7 @@
 {% block content %}
 
     <h2>Registrer ny bruker</h2>
-    {{ auth.form(url_for('post_register')) }}
+    {{ auth.form(url_for('post_register'), "Registrer") }}
 
     {% if error_msg %}
         <b class="error-msg">{{ error_msg }}</b>
