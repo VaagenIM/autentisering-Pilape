@@ -37,7 +37,7 @@ def get_user(username: str) -> User | None:
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
 
-    result = cursor.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
+    result = cursor.execute("SELECT username, password FROM users WHERE username = ?", (username,)).fetchone()
 
     conn.close()
 
@@ -52,7 +52,8 @@ def db_init() -> None:
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users (
-        username TEXT PRIMARY KEY,
+        id INTEGER PRIMARY KEY,
+        username TEXT,
         password TEXT,
         UNIQUE(username)
     )""")
