@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Rediger sitat</h2>
+
+    <form action="{{ url_for('update_quotes', id=id) }}" method="post">
+        <br>
+        <label for="new_content">Sitat</label>
+        <input id="new_content" name="new_content" class="text-input" required value="{{ old_content }}">
+        <br>
+        <input type="submit" class="button">
+    </form>
+
+{% endblock %}

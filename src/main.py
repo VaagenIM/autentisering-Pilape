@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, url_for
 from user import User, get_user
-from quote import quote, get_quote_list, delete_quote, get_quote_username
+from quote import quote, get_quote_list, delete_quote, get_quote_username, get_quote_content, update_quote_content
 from decorators import login_required
 import os
 
@@ -75,6 +75,24 @@ def delete_quotes(id: int):
         return "403 Forbidden", 403
 
     delete_quote(id)
+    return redirect(url_for("get_quotes"))
+
+@app.route("/quotes/edit/<int:id>", methods=["GET"])
+@login_required
+def get_quote_editor(id: int):
+    if get_quote_username(id) != session["user"]["username"]:
+        return "403 Forbidden", 403
+
+    return render_template("edit.html", id=id, old_content=get_quote_content(id))
+
+@app.route("/quotes/update/<int:id>", methods=["POST"])
+@login_required
+def update_quotes(id: int):
+    if get_quote_username(id) != session["user"]["username"]:
+        return "403 Forbidden", 403
+
+    update_quote_content(request.form["new_content"], id)
+
     return redirect(url_for("get_quotes"))
 
 def run(debug: bool = False) -> None:

@@ -37,6 +37,15 @@ def delete_quote(id: int) -> None:
     conn.commit()
     conn.close()
 
+def update_quote_content(new_content: str, id: int) -> None:
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+
+    cursor.execute("UPDATE quotes SET content = ? WHERE id = ?", (new_content, id))
+
+    conn.commit()
+    conn.close()
+
 def get_quote_username(id: int) -> str:
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
@@ -47,6 +56,17 @@ def get_quote_username(id: int) -> str:
     conn.close()
 
     return result[0] # Fetchone returns tuple
+
+def get_quote_content(id: int) -> str:
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+
+    result: str = cursor.execute("SELECT content FROM quotes WHERE id = ?", (id, )).fetchone()[0]
+
+    conn.commit()
+    conn.close()
+
+    return result
 
 def db_init() -> None:
     conn = sqlite3.connect(DATABASE)
