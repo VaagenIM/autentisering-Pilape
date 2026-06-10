@@ -15,10 +15,7 @@ def session_login(user: User) -> None:
     session["user"] = user
     session["logged_in"] = True
 
-@app.route("/log-out")
-def log_out():
-    session.clear()
-    return redirect("/")
+
 
 @app.route("/register")
 def get_register() -> str:
@@ -42,6 +39,13 @@ def post_register():
     session_login(user)
     return redirect("/")
 
+
+
+@app.route("/log-out")
+def log_out():
+    session.clear()
+    return redirect("/")
+
 @app.route("/log-in")
 def get_login() -> str:
     return render_template("login.html")
@@ -54,6 +58,14 @@ def post_login():
 
     session_login(user)
     return redirect("/")
+
+
+
+@app.route("/profile", methods=["GET"])
+def get_profile():
+    return render_template("profile.html")
+
+
 
 @app.route("/quotes")
 @login_required
@@ -94,6 +106,8 @@ def update_quotes(id: int):
     update_quote_content(request.form["new_content"], id)
 
     return redirect(url_for("get_quotes"))
+
+
 
 def run(debug: bool = False) -> None:
     app.run(debug=debug)

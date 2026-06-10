@@ -11,7 +11,7 @@
         <a href="/quotes" class="button">Sitat</a>
 
         {% if session.user %}
-            {{ session.user.username }}
+            <a href="/profile" class="button">{{ session.user.username }}</a>
         {% endif %}
 
         {% endif %}
